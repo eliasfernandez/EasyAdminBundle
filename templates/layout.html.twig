@@ -104,6 +104,9 @@
                                 {% elseif not item.isMenuSection %}
                                     <a href="{{ item.linkUrl }}" class="dropdown-item user-action {{ item.cssClass }}"
                                        target="{{ item.linkTarget }}" rel="{{ item.linkRel }}"
+                                       {% if item.type == "access_impersonation" %}
+                                           data-bs-toggle="modal" data-bs-target="#modal-impersonate" id="modal-impersonate-link"
+                                       {% endif %}
                                        referrerpolicy="origin-when-cross-origin">
                                         {% if item.icon is not empty %}<i class="fa fa-fw {{ item.icon }}"></i>{% endif %}
                                         {{ item.label|trans }}
@@ -361,6 +364,9 @@
 
                                 <section id="main" class="content-body">
                                     {% block main %}{% endblock %}
+                                    {% if impersonator_permission == 'IS_IMPERSONATOR' %}
+                                        {{ include('@EasyAdmin/includes/_impersonate_modal.html.twig') }}
+                                    {% endif %}
                                 </section>
 
                                 {% block content_footer_wrapper %}
